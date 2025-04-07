@@ -1,0 +1,8 @@
+Options -Indexes
+ErrorDocument 404 /404.php
+
+RewriteEngine On
+ 
+#RedirectMatch ^((?!\/(read|read.php)).*)$ https://%{HTTP_HOST}$1 
+ 
+ 

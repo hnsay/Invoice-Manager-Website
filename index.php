@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" style="background-image: url('background.jpg');">
+<head>
+    <meta charset="UTF-8">
+    <title>Cummins Links</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 350px; padding: 20px; }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "welcome.php">Fatura Yönetim Portalı</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item_guide&sys_id=7193f910db55e8d0b76d1bbf2996199e&sysparm_category=d258b953c611227a0146101fb1be7c31">Monitor/Headset/Keyboard/Mouse/Bag Requests</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item&sys_id=aec86e481b4ac41028c0dd39cd4bcbf3&referrer=popular_items">Hardware & Software Problems</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item&sys_id=f5a5aa041bc20810951055be6e4bcbe2&referrer=popular_items">Mobile/Desk Phone Problems</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item&sys_id=2d33d9b71bea04d0951055be6e4bcb6f&sysparm_category=061ea7391b5e001028c0dd39cd4bcb44">Mobile/Desk Phone Requests</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item_guide&sys_id=1f210f791b25a89c63863150cd4bcbd2&sysparm_category=2809952237b1300054b6a3549dbe5dd4">Order Software</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item&sys_id=7bafc93a1baacc5028c0dd39cd4bcb76&sysparm_category=c176e654dba7c85033912a8cd3961976">File Share Issue</a></p><br><br>
+
+<p>&nbsp&nbsp&nbsp&nbsp&nbsp<a href = "https://cummins.service-now.com/esc?id=sc_cat_item&sys_id=2e7239911bf6c014951055be6e4bcbe9&sysparm_category=c176e654dba7c85033912a8cd3961976">File Share Request</a></p><br><br>
+
+
+
+</body>
+</html>
