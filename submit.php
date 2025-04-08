@@ -10,7 +10,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 //get database config
-require_once "config.php";
+require_once "/config/config.php";
 require_once "error_log.php";
 
 //set invoice number to "null"
