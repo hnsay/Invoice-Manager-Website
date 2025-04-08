@@ -22,7 +22,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
  
 // Include config file
-require_once "/config/config.php";
+require_once "config/config.php";
 require_once "error_log.php";
 
  

@@ -24,7 +24,7 @@ if ($_SESSION["usertype"] != "superuser") {
       exit;
 }
 
-require_once "/config/config.php";
+require_once "config/config.php";
 require_once "error_log.php";
 ?>
 

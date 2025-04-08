@@ -10,7 +10,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ||
 }
 
 // Include DB config
-require_once "/config/config.php";
+require_once "config/config.php";
 require_once "error_log.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
