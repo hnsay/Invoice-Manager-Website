@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-require_once "/config/config.php";
+require_once "config/config.php";
 require_once "error_log.php"; 
 
 if ($_POST['username'] == "Varsayılan") {

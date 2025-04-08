@@ -27,7 +27,7 @@ if ($_SESSION["usertype"] != "superuser") {
 }
  
 // Include config file
-require_once "/config/config.php";
+require_once "config/config.php";
 require_once "error_log.php";
  
 // Define variables and initialize with empty values
