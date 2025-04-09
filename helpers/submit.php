@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: app/views/login.php");
+      header("location: login.php");
       exit;
 }
 
@@ -42,7 +42,7 @@ $invoice =  mysqli_fetch_array($result);
 
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -147,11 +147,11 @@ function Return_invoice($link, $no, $comment)
 
 
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Fatura Onay/Red</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 600px; padding: 20px; }

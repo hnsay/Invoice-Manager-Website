@@ -17,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
  
@@ -89,11 +89,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
  
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Change Password</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }

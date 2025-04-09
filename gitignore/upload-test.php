@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ||
     ($_SESSION["usertype"] !== "superuser" && $_SESSION["usertype"] !== "admin")) {
-    header("Location: app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+    header("Location: login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
     exit;
 }
 

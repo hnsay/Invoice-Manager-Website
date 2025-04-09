@@ -17,12 +17,12 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
 if ($_SESSION["usertype"] != "superuser") {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -58,11 +58,11 @@ function Delete_user($link, $username)
 ?>
 
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Delete User</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
         select{ text-align: left;}

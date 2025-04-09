@@ -14,12 +14,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
 if ($_SESSION["usertype"] != "superuser") {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -32,16 +32,16 @@ $result = mysqli_query($link, $sql);
 ?>
 
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
     
     
-    <script src="Datatables/datatables.min.js"></script>
-    <link rel="stylesheet" href="Datatables/datatables.css"/>
-    <link rel="stylesheet" href="css/jquery.dataTables.css">
-    <link rel="stylesheet" href="styles.css">
+    <script src="/public/Datatables/datatables.min.js"></script>
+    <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
+    <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
 
 
 
@@ -119,7 +119,7 @@ table.dataTable thead th {
   <h2>Manage Users And Groups</h2><br>
   <form class="form-group" id="myform"><br>
     <a href="register.php" class="btn btn-primary" style="margin-left:0px;">Create User</a>
-    <a href="app/views/createmailgroup.php" class="btn btn-primary">Create Group</a>
+    <a href="createmailgroup.php" class="btn btn-primary">Create Group</a>
     <a class="btn btn-primary" href="reset-user.php">Change User Password</a>
     <a class="btn btn-primary" href="editusers.php">Edit Users</a>
     <a class="btn btn-primary" href="deleteuser.php">Remove Users & Groups</a>

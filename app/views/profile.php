@@ -18,7 +18,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
@@ -42,7 +42,7 @@ if (!isset($_SESSION["usertype"])) {
 }
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("location: app/views/login.php");
+    header("location: login.php");
 }
 
 
@@ -53,11 +53,11 @@ mysqli_close($link);
 ?>
 
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Profil Yönetimi</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 12px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
@@ -71,7 +71,7 @@ mysqli_close($link);
 <body>
     <div class="wrapper">
         <a class="btn btn-primary" href="reset-password.php" style="margin-right:20px;">Şifre Değiştir</a>
-        <a class="btn btn-danger" href="logout.php">Çıkış Yap</a>
+        <a class="btn btn-danger" href="/helpers/logout.php">Çıkış Yap</a>
         <label style="margin-top:20px;font-size: 20px;">Kullanıcı Türü: {<?php echo $_SESSION["usertype"];?>}</label>
     </div>  
 

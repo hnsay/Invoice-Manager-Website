@@ -17,12 +17,12 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
     exit;
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -93,7 +93,7 @@ $(document).ready( function () {
 
 <?php /*
     ajax:  {
-        url: "call.php",
+        url: "/helpers/call.php",
         data: function(d){
             d.supplier = "supplier";
             d.no = "supplier";
@@ -109,14 +109,14 @@ $(document).ready( function () {
 ?>   
     ajax:  { url: "<?php
     
-    if (basename($_SERVER['PHP_SELF']) == 'app/views/allinvoices.php') {
-        echo "call.php";
+    if (basename($_SERVER['PHP_SELF']) == 'allinvoices.php') {
+        echo "/helpers/call.php";
     } else if (basename($_SERVER['PHP_SELF']) == 'pending.php') {
-        echo "call_pending.php";
+        echo "/helpers/call_pending.php";
     } else if (basename($_SERVER['PHP_SELF']) == 'pending_finance.php') {
-        echo "call_pending_finance.php";
+        echo "/helpers/call_pending_finance.php";
     } else {
-          header("location: app/views/404.php");
+          header("location: 404.php");
     }?>" },<?php
               /*dataSrc: function ( json ) {
                 for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {
@@ -141,7 +141,7 @@ $(document).ready( function () {
         { data: 'po_rfa' },
         { data: 'description' },
         { render: function ( data, type, row, meta ) {
-            return '<form method="post" class="inline" action="/submit.php" target="_blank">'+
+            return '<form method="post" class="inline" action="/helpers/submit.php" target="_blank">'+
             '<input type="hidden"/>'+
             '<button type="submit" name="'+
             row.no+
@@ -381,7 +381,7 @@ $(document).ready( function () {
     initComplete: function () {
       var api = this.api();
       count = 0;
-            $myform = $('<form id ="myform" target="_blank" onsubmit="sendData()" action="assign.php" method="post" style="margin-left:20px;margin-right:30px;display: inline;"></form>');
+            $myform = $('<form id ="myform" target="_blank" onsubmit="sendData()" action="/helpers/assign.php" method="post" style="margin-left:20px;margin-right:30px;display: inline;"></form>');
             var selector = document.createElement('select');
             selector.id = "selector";
       selector.name = "username";
@@ -761,7 +761,7 @@ function sendOneRow(event, form) {
 
 <?php /*  $.ajax({
       type: "POST",
-      url: "submit.php",
+      url: "/helpers/submit.php",
       data: $(form).serialize()
   });*/?>
 
@@ -788,7 +788,7 @@ function sendOneRow(event, form) {
       '<tr>'+
       '<td colspan="2" style="border:0px;" id="td'+ rowIndex +'">'+
       '<form target="_blank" data-rowindex="'+ rowIndex +'" '+
-      'onsubmit="sendOneRow(event,this)" action="assign.php" method="post" style="display: inline;">'+
+      'onsubmit="sendOneRow(event,this)" action="/helpers/assign.php" method="post" style="display: inline;">'+
       '<select class="form-control" name = "username" style = "margin-right:30px;">' + $('#selector').html() + '</select>'+
       '<button class="btn btn-primary" type="submit" id="submit-button" style="margin-right: 30px;">Atama Yap</button>'+
       '</form>'+

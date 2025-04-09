@@ -18,7 +18,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: app/views/login.php");
+      header("location: login.php");
       exit;
 }
 
@@ -34,19 +34,19 @@ mysqli_close($link);
     <meta charset="UTF-8">
     <title>Toplu Fatura İşleme</title>
 
-    <script src="Datatables/datatables.min.js"></script>
-    <script src="Datatables/moment.min.js"></script>
-    <script src="Datatables/dataTables.checkboxes.min.js"></script>
-    <script src="Datatables/jquery.dataTables.colResize.js"></script>
-      <script src="Datatables/select2.min.js"></script>
+    <script src="/public/Datatables/datatables.min.js"></script>
+    <script src="/public/Datatables/moment.min.js"></script>
+    <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>
+    <script src="/public/Datatables/jquery.dataTables.colResize.js"></script>
+      <script src="/public/Datatables/select2.min.js"></script>
     <?php //<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> ?>
-    <link rel="stylesheet" href="Datatables/datatables.css"/>
-    <link rel="stylesheet" href="css/jquery.dataTables.css">
-    <?php //<link rel="stylesheet" href="css/dataTables.checkboxes.css"> ?>
-    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-    <link rel="stylesheet" href="styles.css">
-    <?php //<link rel="stylesheet" href="css/jquery.dataTables.colResize.css"> ?>
-      <link rel="stylesheet" type="text/css" href="css/select2.min.css">
+    <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
+    <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
+    <?php //<link rel="stylesheet" href="/public/css/dataTables.checkboxes.css"> ?>
+    <link rel="stylesheet" href="/public/css/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <?php //<link rel="stylesheet" href="/public/css/jquery.dataTables.colResize.css"> ?>
+      <link rel="stylesheet" type="text/css" href="/public/css/select2.min.css">
 
 <style type="text/css">
 
@@ -102,7 +102,7 @@ table.dataTable thead th {
 <body>
 <h1>Toplu Fatura İşleme</h1> <br>
 <div class="wrapper" style="padding-left: 50px;">
-<form action="process_bulk_submit.php" method="post" id="submitBulkForm" onsubmit="sendData()">
+<form action="/helpers/process_bulk_submit.php" method="post" id="submitBulkForm" onsubmit="sendData()">
             <div class="form-group <?php echo (!empty($comment_err)) ? 'has-error' : ''; ?>">
                 <p>Finans Yorum:</p>
                 <textarea style="margin-bottom:20px;" type="text" name="commentFinance" class="form-control" rows="3" maxlength="250" id="textArea"></textarea>
@@ -144,6 +144,6 @@ table.dataTable thead th {
   </tbody>
 </table>
 </div>
-<?php require 'table_process_lite.php'; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/helpers/table_process_lite.php"; ?>
 </body>
 </html>
