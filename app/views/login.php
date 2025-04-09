@@ -27,8 +27,8 @@ if (isset($_POST['location']) && $_POST['location'] != '') {
 }
  
 // Include config file
-require_once "config/config.php";
-require_once "error_log.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -129,11 +129,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
  
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
