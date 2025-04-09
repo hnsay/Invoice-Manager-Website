@@ -14,17 +14,17 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
 if ($_SESSION["usertype"] != "superuser") {
-      header("location: 404.php");
+      header("location: app/views/404.php");
       exit;
 }
 
-require_once "config/config.php";
-require_once "error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
 
 
 $sql = "SELECT * FROM users";
@@ -119,7 +119,7 @@ table.dataTable thead th {
   <h2>Manage Users And Groups</h2><br>
   <form class="form-group" id="myform"><br>
     <a href="register.php" class="btn btn-primary" style="margin-left:0px;">Create User</a>
-    <a href="createmailgroup.php" class="btn btn-primary">Create Group</a>
+    <a href="app/views/createmailgroup.php" class="btn btn-primary">Create Group</a>
     <a class="btn btn-primary" href="reset-user.php">Change User Password</a>
     <a class="btn btn-primary" href="editusers.php">Edit Users</a>
     <a class="btn btn-primary" href="deleteuser.php">Remove Users & Groups</a>

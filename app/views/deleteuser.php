@@ -17,17 +17,17 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
 if ($_SESSION["usertype"] != "superuser") {
-      header("location: 404.php");
+      header("location: app/views/404.php");
       exit;
 }
 
-require_once "config/config.php";
-require_once "error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
 
 $sql = "SELECT username FROM users";
 $result = mysqli_query($link, $sql);

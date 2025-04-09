@@ -7,12 +7,12 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: login.php");
+      header("location: app/views/login.php");
       exit;
 }
 
-require_once "config/config.php";
-require_once "error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
 
 //check user's mailgroup
 

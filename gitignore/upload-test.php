@@ -5,13 +5,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ||
     ($_SESSION["usertype"] !== "superuser" && $_SESSION["usertype"] !== "admin")) {
-    header("Location: login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+    header("Location: app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
     exit;
 }
 
 // Include DB config
-require_once "config/config.php";
-require_once "error_log.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
