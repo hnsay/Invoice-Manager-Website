@@ -17,12 +17,12 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -34,7 +34,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 <head>
     <meta charset="UTF-8">
     <title>Toplu Fatura İşleme</title>
-    <link rel="stylesheet" href="Datatables/datatables.css"/>
+    <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <style type="text/css">
 
 body{ font: 12px sans-serif; text-align: center; }
@@ -106,9 +106,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Yapılacak işlem belirlenemedi.";
     }
-    //header("location: app/views/login.php");
+    //header("location: login.php");
 } else {
-      header("location: app/views/404.php");
+      header("location: 404.php");
 }
 
 

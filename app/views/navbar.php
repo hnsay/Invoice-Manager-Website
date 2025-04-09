@@ -19,12 +19,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="welcome.php"><img src="favicon.ico"></a>
+      <a class="navbar-brand" href="welcome.php"><img src="/public/icons/favicon.ico"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'welcome.php' ? 'active' : ''; ?>"><a href="welcome.php">Anasayfa</a></li>
-        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'app/views/approve_bulk.php' || basename($_SERVER['PHP_SELF']) == 'submit_bulk.php' ? 'active' : ''; ?>"><a href="app/views/approve_bulk.php">Toplu Onay</a></li>
+        <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'approve_bulk.php' || basename($_SERVER['PHP_SELF']) == 'submit_bulk.php' ? 'active' : ''; ?>"><a href="approve_bulk.php">Toplu Onay</a></li>
         
         <?php if ($_SESSION["usertype"] == "superuser" || $_SESSION["usertype"] == "admin") : ?>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'pending.php' ? 'active' : ''; ?>"><a href="pending.php">Bekleyen Faturalar</a></li>
@@ -35,7 +35,7 @@
         
         <?php if ($_SESSION["usertype"] == "superuser") : ?>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'manageusers.php' ? 'active' : ''; ?>"><a href="manageusers.php">Manage Users</a></li>
-            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'app/views/allinvoices.php' ? 'active' : ''; ?>"><a href="app/views/allinvoices.php" onclick="confirmNavigation(event, 'app/views/allinvoices.php')">Tüm Faturalar</a></li>
+            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'allinvoices.php' ? 'active' : ''; ?>"><a href="allinvoices.php" onclick="confirmNavigation(event, 'allinvoices.php')">Tüm Faturalar</a></li>
         <?php endif; ?>      
       </ul>
       <ul class="nav navbar-nav navbar-right">

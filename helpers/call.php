@@ -17,12 +17,12 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
     exit;
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 

@@ -17,12 +17,12 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
     exit;
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -47,19 +47,19 @@ mysqli_close($link);
     <title>Finans'ta Bekleyen Faturalar</title>
 
 
-    <script src="Datatables/datatables.min.js"></script>
-    <script src="Datatables/moment.min.js"></script>
-    <script src="Datatables/dataTables.checkboxes.min.js"></script>
-    <script src="Datatables/jquery.dataTables.colResize.js"></script>
-      <script src="Datatables/select2.min.js"></script>
+    <script src="/public/Datatables/datatables.min.js"></script>
+    <script src="/public/Datatables/moment.min.js"></script>
+    <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>
+    <script src="/public/Datatables/jquery.dataTables.colResize.js"></script>
+      <script src="/public/Datatables/select2.min.js"></script>
     <?php //<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> ?>
-    <link rel="stylesheet" href="Datatables/datatables.css"/>
-    <link rel="stylesheet" href="css/jquery.dataTables.css">
-    <?php //<link rel="stylesheet" href="css/dataTables.checkboxes.css"> ?>
-    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
-    <link rel="stylesheet" href="styles.css">
-    <?php //<link rel="stylesheet" href="css/jquery.dataTables.colResize.css"> ?>
-      <link rel="stylesheet" type="text/css" href="css/select2.min.css">
+    <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
+    <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
+    <?php //<link rel="stylesheet" href="/public/css/dataTables.checkboxes.css"> ?>
+    <link rel="stylesheet" href="/public/css/awesome-bootstrap-checkbox.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <?php //<link rel="stylesheet" href="/public/css/jquery.dataTables.colResize.css"> ?>
+      <link rel="stylesheet" type="text/css" href="/public/css/select2.min.css">
  
   
 
@@ -189,6 +189,6 @@ table.dataTable thead th {
     
 </table>
 </div>
-<?php require 'table_process.php'; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . "/helpers/table_process.php"; ?>
 </body>
 </html>

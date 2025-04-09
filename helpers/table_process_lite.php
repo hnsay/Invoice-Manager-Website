@@ -17,7 +17,7 @@ if (session_status() == PHP_SESSION_NONE) {
  
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
     exit;
 }
 
@@ -88,7 +88,7 @@ $(document).ready( function () {
 
 <?php /*
     ajax:  {
-        url: "call.php",
+        url: "/helpers/call.php",
         data: function(d){
             d.supplier = "supplier";
             d.no = "supplier";
@@ -106,11 +106,11 @@ $(document).ready( function () {
 
     
     if (basename($_SERVER['PHP_SELF']) == 'process_bulk.php') {
-        echo "call_pending_finance.php";
-    } else if (basename($_SERVER['PHP_SELF']) == 'app/views/approve_bulk.php') {
+        echo "/helpers/call_pending_finance.php";
+    } else if (basename($_SERVER['PHP_SELF']) == 'approve_bulk.php') {
         echo "call_assigned_invoices.php";
     } else {
-          header("location: app/views/404.php");
+          header("location: 404.php");
     }?>" },<?php
               /*dataSrc: function ( json ) {
                 for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {
@@ -377,7 +377,7 @@ columnDefs : [
       '<tr>'+
       '<td colspan="2" style="border:0px;" id="td'+ rowIndex +'">'+
       '<form target="_blank" data-rowindex="'+ rowIndex +'" '+
-      'onsubmit="sendOneRow(event,this)" action="assign.php" method="post" style="display: inline;">'+
+      'onsubmit="sendOneRow(event,this)" action="/helpers/assign.php" method="post" style="display: inline;">'+
       '</form>'+
       '</td>'+'</tr>'+
       '<tr>'+

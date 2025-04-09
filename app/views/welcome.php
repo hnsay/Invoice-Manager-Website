@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: app/views/login.php");
+      header("location: login.php");
       exit;
 }
 
@@ -47,12 +47,12 @@ mysqli_close($link);
 <head>
     <meta charset="UTF-8">
     <title>Anasayfa</title>
-    <script src="Datatables/datatables.min.js"></script>
-    <script src="Datatables/dataTables.checkboxes.min.js"></script>
-    <link rel="stylesheet" href="Datatables/datatables.css"/>
-    <link rel="stylesheet" href="css/jquery.dataTables.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+    <script src="/public/Datatables/datatables.min.js"></script>
+    <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>
+    <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
+    <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="/public/css/awesome-bootstrap-checkbox.css">
 
 
 
@@ -145,7 +145,7 @@ table.dataTable thead th {
       </td>
 
       <td data-table-header="" style="vertical-align: middle;">
-        <form method="post" class="inline" action="/submit.php">  
+        <form method="post" class="inline" action="/helpers/submit.php">  
                     <input type="hidden"/>
                         <button type="submit" name="<?php echo $rows['no'];?>" class="btn btn-success">
                                 İşlem Yap

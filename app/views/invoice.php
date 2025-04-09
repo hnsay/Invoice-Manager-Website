@@ -15,7 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
@@ -48,7 +48,7 @@ $result = mysqli_query($link, $sql);
 $invoice = mysqli_fetch_array($result);
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
-    header("location: app/views/404.php");
+    header("location: 404.php");
     exit;
 }
 
@@ -56,11 +56,11 @@ $sql = "SELECT * FROM invoicelines where no = " . "'" . $no . "'";
 $result = mysqli_query($link, $sql);
 ?>
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
   <meta charset="UTF-8">
   <title><?php echo $no;?></title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
   <style type="text/css">
     body{ font: 9px sans-serif; text-align: center;}
     table{
@@ -163,7 +163,7 @@ $result = mysqli_query($link, $sql);
       </div>
     </div>
     <div class="col-sm-6 second-column" style="text-align: right;">
-    <form method="post" class="inline" action="/submit.php">
+    <form method="post" class="inline" action="/helpers/submit.php">
     <h5><b>Fatura Tarihi: </b><?php echo $invoice['date']; ?></h5><br>
                     <input type="hidden"/>
                         <button type="submit" name="<?php echo $no;?>" class="btn btn-success">

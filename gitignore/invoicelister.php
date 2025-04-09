@@ -6,12 +6,12 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:app/views/login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
+      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
       exit;
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: app/views/404.php");
+      header("location: 404.php");
       exit;
 }
  
@@ -83,11 +83,11 @@ function Format_description($string){
 
 
 <!DOCTYPE html>
-<html lang="en" style="background-image: url('background.jpg');">
+<html lang="en" style="background-image: url('/public/images/background.jpg');">
 <head>
     <meta charset="UTF-8">
     <title>Fatura Yükleme</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 12px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
@@ -103,12 +103,12 @@ function Format_description($string){
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="welcome.php"><img src="favicon.ico"></a>
+      <a class="navbar-brand" href="welcome.php"><img src="/public/icons/favicon.ico"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="welcome.php">Anasayfa</a></li>
-        <li><a href="app/views/allinvoices.php">Tüm Faturalar</a></li>
+        <li><a href="allinvoices.php">Tüm Faturalar</a></li>
         <?php if ($_SESSION["usertype"] == "superuser"): ?>
             <li><a href="manageusers.php">Manage Users</a></li>
         <?php endif; ?>  
