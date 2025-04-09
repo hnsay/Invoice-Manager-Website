@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: /app/views/login.php");
+      header("location: login.php");
       exit;
 }
 
@@ -29,7 +29,7 @@ if (isset($_POST['no'])) {
 }
 
 if ($no == 'null') {
-      header("location: /app/views/welcome.php");
+      header("location: welcome.php");
 }
 
 $sql = "SELECT mailgroup FROM users WHERE username=". "'" . $_SESSION["username"] . "'";
@@ -42,7 +42,7 @@ $invoice =  mysqli_fetch_array($result);
 
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
-      header("location: /app/views/404.php");
+      header("location: 404.php");
       exit;
 }
 
@@ -161,7 +161,7 @@ function Return_invoice($link, $no, $comment)
     <div class="wrapper">
     <?php if ($scenario == "success") : ?>
         <p style="color:green;font-size:20px;">İşlem başarıyla tamamlandı.</p>
-        <a class="btn btn-primary" href="/app/views/welcome.php">Anasayfa</a>
+        <a class="btn btn-primary" href="welcome.php">Anasayfa</a>
     <?php else: ?>
         <h2 style="margin-bottom:20px;">Fatura Onaylama/İşleme</h2>
         <h5 style="margin-bottom:20px;">Fatura No: <?php echo $no; ?></h5>
