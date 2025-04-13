@@ -22,7 +22,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: 404.php");
+      header("location: 403.php");
       exit;
 }
 
@@ -116,7 +116,7 @@ $(document).ready( function () {
     } else if (basename($_SERVER['PHP_SELF']) == 'pending_finance.php') {
         echo "/helpers/call_pending_finance.php";
     } else {
-          header("location: 404.php");
+          header("location: 403.php");
     }?>" },<?php
               /*dataSrc: function ( json ) {
                 for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {

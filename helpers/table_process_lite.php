@@ -110,7 +110,7 @@ $(document).ready( function () {
     } else if (basename($_SERVER['PHP_SELF']) == 'approve_bulk.php') {
         echo "call_assigned_invoices.php";
     } else {
-          header("location: 404.php");
+          header("location: 403.php");
     }?>" },<?php
               /*dataSrc: function ( json ) {
                 for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {

@@ -42,7 +42,7 @@ $invoice =  mysqli_fetch_array($result);
 
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
-      header("location: 404.php");
+      header("location: 403.php");
       exit;
 }
 
