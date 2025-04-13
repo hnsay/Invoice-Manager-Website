@@ -19,6 +19,7 @@ define('DB_PASSWORD', 'test');
 define('DB_NAME', 'invoice_tracker_test');
 define('LOGIN_URL', '/app/views/login.php');
 define('LOGOUT_URL', '/hepers/logout.php');
+define('ASSIGN_URL', '/helpers/assign.php');
 define('CALL_URL', '/helpers/call.php');
 define('CALL_PENDING_URL', '/helpers/call_pending.php');
 define('CALL_PENDING_FINANCE_URL', '/helpers/call_pending_finance.php');
