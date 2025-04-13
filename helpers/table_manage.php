@@ -22,7 +22,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: 404.php");
+      header("location: 403.php");
       exit;
 }
 
@@ -94,7 +94,7 @@ $(document).ready( function () {
     if (basename($_SERVER['PHP_SELF']) == 'manage_allinvoices.php') {
         echo "/helpers/call.php";
     } else {
-          header("location: 404.php");
+          header("location: 403.php");
     }?>" },        
     columns: [
         {},
