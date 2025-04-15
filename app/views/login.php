@@ -83,19 +83,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
+                            $_SESSION["usertype"] = "user"; // Default usertype
 
+                            $sql = "SELECT usertype FROM users WHERE username = ?";
+                            if ($stmt = mysqli_prepare($link, $sql)) {
+                                mysqli_stmt_bind_param($stmt, "s", $param_username);
+                                $param_username = $_SESSION["username"];
 
-                              $sql = "SELECT * FROM users where username=". "'" . $_SESSION["username"] . "'";
-                            $result = mysqli_query($link, $sql);
-                            $user = mysqli_fetch_array($result);
-
-                            if (!isset($_SESSION["usertype"])) {
-                                if ($user['usertype'] == "superuser") {
-                                    $_SESSION["usertype"] = "superuser"; 
-                                } else if ($user['usertype'] == "admin") {
-                                    $_SESSION["usertype"] = "admin";
-                                } else {
-                                    $_SESSION["usertype"] = "user";
+                                if (mysqli_stmt_execute($stmt)) {
+                                    mysqli_stmt_bind_result($stmt, $usertype);
+                                    if (mysqli_stmt_fetch($stmt)) {
+                                        $_SESSION["usertype"] = $usertype;
+                                    }
                                 }
                             }
                             // Redirect user to welcome page

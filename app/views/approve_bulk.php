@@ -10,20 +10,9 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: login.php");
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
 
 //check user's mailgroup
 
@@ -31,16 +20,6 @@ $sql = "SELECT mailgroup FROM users WHERE username=". "'" . $_SESSION["username"
 $result = mysqli_query($link, $sql);
 $mailgroup = mysqli_fetch_array($result)['mailgroup'];
 
-
-/* No longer showing approved and pending on the main page as admins are already able to filter
-if ($_SESSION["usertype"] == "superuser" || $_SESSION["usertype"] == "admin") {
-    $sql = "SELECT * FROM invoices WHERE state='Approved' OR state='Rejected' OR (state='Pending' AND assignee = " . "'" . $_SESSION["username"] . "')";
-  $result = mysqli_query($link, $sql);
-} else {
-    $sql = "SELECT * FROM invoices where state='Pending' AND assignee = " . "'" . $_SESSION["username"] . "'";
-  $result = mysqli_query($link, $sql);
-}
-*/
 
 if ($mailgroup === null) {
     $sql = "SELECT * FROM invoices where state='Bekliyor' AND assignee = " . "'" . $_SESSION["username"] . "'";

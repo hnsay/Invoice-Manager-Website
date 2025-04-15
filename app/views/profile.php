@@ -10,34 +10,23 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
 
 //check if the user is admin or superuser
-
-$sql = "SELECT * FROM users where username=". "'" . $_SESSION["username"] . "'";
-$result = mysqli_query($link, $sql);
-$user = mysqli_fetch_array($result);
-
 if (!isset($_SESSION["usertype"])) {
-    if ($user['superuser'] == "1") {
-        $_SESSION["usertype"] = "superuser"; 
-    } else if ($user['admin'] == "1") {
-        $_SESSION["usertype"] = "admin";
-    } else {
-        $_SESSION["usertype"] = "user";
+    $sql = "SELECT usertype FROM users WHERE username = ?";
+    if ($stmt = mysqli_prepare($link, $sql)) {
+        mysqli_stmt_bind_param($stmt, "s", $param_username);
+        $param_username = $_SESSION["username"];
+        if (mysqli_stmt_execute($stmt)) {
+            mysqli_stmt_bind_result($stmt, $usertype);
+            if (mysqli_stmt_fetch($stmt)) {
+                $_SESSION["usertype"] = $usertype;
+            }
+            else $_SESSION["usertype"] = "user";
+        }
     }
 }
 

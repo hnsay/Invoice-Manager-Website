@@ -11,21 +11,11 @@
  * @link     invoices.com.tr
  */
 // Include config file
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
-
-if ($_SESSION["usertype"] != "superuser") {
-      header("location: 403.php");
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
+
+protectPage(['superuser']);
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";

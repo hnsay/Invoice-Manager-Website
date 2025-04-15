@@ -10,21 +10,11 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
- 
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
 
-if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: 403.php");
-      exit;
-}
+protectPage(['admin'], ['superuser']);
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -33,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 
 if ($_POST['username'] == "Varsayılan") {
     $user = "Default";

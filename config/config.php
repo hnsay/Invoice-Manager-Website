@@ -18,50 +18,44 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'test');
 define('DB_NAME', 'invoice_tracker_test');
 
-define('APP_PATH', $_SERVER['DOCUMENT_ROOT'] . '/app');
+define('URL_403', '/app/views/403.php');
+define('URL_ALL_INVOICES', '/app/views/allinvoices.php');
+define('URL_APPROVE_BULK', '/app/views/approve_bulk.php');
+define('URL_APPROVE_BULK_SUBMIT', '/app/views/approve_bulk_submit.php');
+define('URL_CREATE_MAIL_GROUP', '/app/views/createmailgroup.php');
+define('URL_DELETE_USER', '/app/views/deleteuser.php');
+define('URL_EDIT_USERS', '/app/views/editusers.php');
+define('URL_INVOICE', '/app/views/invoice.php');
+define('URL_LOGIN', '/app/views/login.php');
+define('URL_MANAGE_USERS', '/app/views/manageusers.php');
+define('URL_MANAGE_ALL_INVOICES', '/app/views/manage_allinvoices.php');
+define('URL_NAVBAR', '/app/views/navbar.php');
+define('URL_PENDING', '/app/views/pending.php');
+define('URL_PENDING_FINANCE', '/app/views/pending_finance.php');
+define('URL_PROCESS_BULK', '/app/views/process_bulk.php');
+define('URL_PROCESS_BULK_SUBMIT', '/app/views/process_bulk_submit.php');
+define('URL_PROFILE', '/app/views/profile.php');
+define('URL_REGISTER', '/app/views/register.php');
+define('URL_RESET_PASSWORD', '/app/views/reset-password.php');
+define('URL_RESET_USER', '/app/views/reset-user.php');
+define('URL_RULES', '/app/views/rules.php');
+define('URL_SUBMIT', '/app/views/submit.php');
+define('URL_UPLOAD', '/app/views/upload.php');
+define('URL_WELCOME', '/app/views/welcome.php');
 
-define('APP_CONTROLLERS', APP_PATH . '/controllers');
-define('APP_MODELS', APP_PATH . '/models');
-define('APP_VIEWS', APP_PATH . '/views');
+define('HELPERS_PATH', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'helpers');
 
-define('VIEW_403', APP_VIEWS . '/403.php');
-define('VIEW_ALLINVOICES', APP_VIEWS . '/allinvoices.php');
-define('VIEW_APPROVE_BULK', APP_VIEWS . '/approve_bulk.php');
-define('VIEW_APPROVE_BULK_SUBMIT', APP_VIEWS . '/approve_bulk_submit.php');
-define('VIEW_CREATEMAILGROUP', APP_VIEWS . '/createmailgroup.php');
-define('VIEW_DELETEUSER', APP_VIEWS . '/deleteuser.php');
-define('VIEW_EDITUSERS', APP_VIEWS . '/editusers.php');
-define('VIEW_INVOICE', APP_VIEWS . '/invoice.php');
-define('VIEW_LOGIN', APP_VIEWS . '/login.php');
-define('VIEW_MANAGEUSERS', APP_VIEWS . '/manageusers.php');
-define('VIEW_MANAGE_ALLINVOICES', APP_VIEWS . '/manage_allinvoices.php');
-define('VIEW_NAVBAR', APP_VIEWS . '/navbar.php');
-define('VIEW_PENDING', APP_VIEWS . '/pending.php');
-define('VIEW_PENDING_FINANCE', APP_VIEWS . '/pending_finance.php');
-define('VIEW_PROCESS_BULK', APP_VIEWS . '/process_bulk.php');
-define('VIEW_PROCESS_BULK_SUBMIT', APP_VIEWS . '/process_bulk_submit.php');
-define('VIEW_PROFILE', APP_VIEWS . '/profile.php');
-define('VIEW_REGISTER', APP_VIEWS . '/register.php');
-define('VIEW_RESET_PASSWORD', APP_VIEWS . '/reset-password.php');
-define('VIEW_RESET_USER', APP_VIEWS . '/reset-user.php');
-define('VIEW_RULES', APP_VIEWS . '/rules.php');
-define('VIEW_SUBMIT', APP_VIEWS . '/submit.php');
-define('VIEW_UPLOAD', APP_VIEWS . '/upload.php');
-define('VIEW_WELCOME', APP_VIEWS . '/welcome.php');
+define('ASSIGN_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'assign.php');
+define('CALL_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'call.php');
+define('CALL_PENDING_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'call_pending.php');
+define('CALL_PENDING_FINANCE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'call_pending_finance.php');
+define('LOGOUT_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'logout.php');
+define('SESSION_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'session.php');
+define('TABLE_MANAGE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_manage.php');
+define('TABLE_PROCESS_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_process.php');
+define('TABLE_PROCESS_LITE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_process_lite.php');
 
-define('HELPERS_PATH', $_SERVER['DOCUMENT_ROOT'] . '/helpers');
-
-define('ASSIGN_HELPER', HELPERS_PATH . '/assign.php');
-define('CALL_HELPER', HELPERS_PATH . '/call.php');
-define('CALL_PENDING_HELPER', HELPERS_PATH . '/call_pending.php');
-define('CALL_PENDING_FINANCE_HELPER', HELPERS_PATH . '/call_pending_finance.php');
-define('LOGOUT_HELPER', HELPERS_PATH . '/logout.php');
-define('SESSION_HELPER', HELPERS_PATH . '/session.php');
-define('TABLE_MANAGE_HELPER', HELPERS_PATH . '/table_manage.php');
-define('TABLE_PROCESS_HELPER', HELPERS_PATH . '/table_process.php');
-define('TABLE_PROCESS_LITE_HELPER', HELPERS_PATH . '/table_process_lite.php');
-
-define('PUBLIC_PATH', $_SERVER['DOCUMENT_ROOT'] . '/public');
+define('PUBLIC_PATH', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'public');
 
  
 /* Attempt to connect to MySQL database */

@@ -1,17 +1,18 @@
 <?php
-
-//start session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("location: login.php");
-      exit;
-}
-
-//get database config
+/**
+ * Submit SQL actions for invoice(s).
+ *
+ * PHP version 8.2.12
+ *
+ * @category InvoiceTracker
+ * @package  InvoiceTracker
+ * @author   Halil Say <say@hnsay.com.tr>
+ * @license  http://opensource.org/licenses/MIT MIT License
+ * @link     invoices.com.tr
+ */
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
 
 //set invoice number to "null"
 $no = 'null';

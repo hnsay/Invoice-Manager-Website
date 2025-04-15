@@ -10,21 +10,11 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
-
-if ($_SESSION["usertype"] != "superuser") {
-      header("location: 403.php");
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
+
+protectPage(['superuser']);
 
 
 $sql = "SELECT * FROM users";

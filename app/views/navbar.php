@@ -26,14 +26,15 @@
         <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'welcome.php' ? 'active' : ''; ?>"><a href="welcome.php">Anasayfa</a></li>
         <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'approve_bulk.php' || basename($_SERVER['PHP_SELF']) == 'submit_bulk.php' ? 'active' : ''; ?>"><a href="approve_bulk.php">Toplu Onay</a></li>
         
-        <?php if ($_SESSION["usertype"] == "superuser" || $_SESSION["usertype"] == "admin") : ?>
-            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'pending.php' ? 'active' : ''; ?>"><a href="pending.php">Bekleyen Faturalar</a></li>
-            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'pending_finance.php' ? 'active' : ''; ?>"><a href="pending_finance.php">Finans Bekleyen</a></li>
-            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'process_bulk.php' ? 'active' : ''; ?>"><a href="process_bulk.php">Toplu İşleme</a></li>
+        <?php if ($_SESSION["usertype"] == "admin") : ?>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'upload.php' ? 'active' : ''; ?>"><a href="upload.php">Fatura Yükle</a></li>
         <?php endif; ?>
         
         <?php if ($_SESSION["usertype"] == "superuser") : ?>
+            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'pending.php' ? 'active' : ''; ?>"><a href="pending.php">Bekleyen Faturalar</a></li>
+            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'pending_finance.php' ? 'active' : ''; ?>"><a href="pending_finance.php">Finans Bekleyen</a></li>
+            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'process_bulk.php' ? 'active' : ''; ?>"><a href="process_bulk.php">Toplu İşleme</a></li>
+            <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'upload.php' ? 'active' : ''; ?>"><a href="upload.php">Fatura Yükle</a></li>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'manageusers.php' ? 'active' : ''; ?>"><a href="manageusers.php">Manage Users</a></li>
             <li class="<?php echo basename($_SERVER['PHP_SELF']) == 'allinvoices.php' ? 'active' : ''; ?>"><a href="allinvoices.php" onclick="confirmNavigation(event, 'allinvoices.php')">Tüm Faturalar</a></li>
         <?php endif; ?>      

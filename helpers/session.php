@@ -12,13 +12,25 @@
  */
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-checkLogin();
 initializeSession();
+checkLogin();
 
 function checkLogin() {
-    if (empty($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-        $redirect = LOGIN_URL . '?location=' . urlencode($_SERVER['REQUEST_URI']);
-        header("Location: $redirect");
+    if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+        $redirectUrl = URL_LOGIN;
+        $requestedUrl = $_SERVER['REQUEST_URI'];
+        if (strpos($requestedUrl, 'http://') !== false || strpos($requestedUrl, 'https://') !== false) {
+            $requestedUrl = '/';
+        }
+
+        $allowedPaths = ['/dashboard', '/profile', '/settings'];
+        if (!in_array(parse_url($requestedUrl, PHP_URL_PATH), $allowedPaths)) {
+            $requestedUrl = '/';
+        }
+
+        $redirectUrl .= '?location=' . urlencode($requestedUrl);
+        
+        header("Location: $redirectUrl");
         exit;
     }
 }
