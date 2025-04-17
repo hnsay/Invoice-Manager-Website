@@ -10,18 +10,11 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-//start session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
-
-//get database config
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
+require_once MODEL_INVOICE;
+require_once MODEL_USER;
 
 //set invoice number to "null"
 $no = 'null';
@@ -39,21 +32,17 @@ foreach ($_GET as $key=>$value) {
     $no = "$key";
 }
 
-$sql = "SELECT mailgroup FROM users WHERE username=". "'" . $_SESSION["username"] . "'";
-$result = mysqli_query($link, $sql);
-$mailgroup = mysqli_fetch_array($result)['mailgroup'];
 
-$sql = "SELECT * FROM invoices where no = " . "'" . $no . "'";
-$result = mysqli_query($link, $sql);
-$invoice = mysqli_fetch_array($result);
+$mailgroup = getMailGroup($link, $_SESSION["username"]);
+
+$invoice = getInvoice($link, $no);
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
     header("location: 403.php");
     exit;
 }
 
-$sql = "SELECT * FROM invoicelines where no = " . "'" . $no . "'";
-$result = mysqli_query($link, $sql);
+$invoiceLines = getInvoiceLines($link, $no);
 ?>
 <!DOCTYPE html>
 <html lang="en" style="background-image: url('/public/images/background.jpg');">
@@ -163,7 +152,7 @@ $result = mysqli_query($link, $sql);
       </div>
     </div>
     <div class="col-sm-6 second-column" style="text-align: right;">
-    <form method="post" class="inline" action="/helpers/submit.php">
+    <form method="post" class="inline" action="submit.php">
     <h5><b>Fatura Tarihi: </b><?php echo $invoice['date']; ?></h5><br>
                     <input type="hidden"/>
                         <button type="submit" name="<?php echo $no;?>" class="btn btn-success">
@@ -185,14 +174,14 @@ $result = mysqli_query($link, $sql);
                         <th><p>Tutar</p></th>
                   </tr>
                     
-                    <?php while($rows = mysqli_fetch_array($result)): ?>
+                    <?php foreach ($invoiceLines as $line): ?>
                     <tr>
-                      <td><?php echo $rows['product']; ?></td>
-                      <td><?php echo $rows['quantity'] ?></td>
-                      <td><?php echo $rows['unitprice']." ".$invoice['currency']; ?></td>
-                      <td><?php echo $rows['price']." ".$invoice['currency']; ?></td>
+                      <td><?php echo $line['product']; ?></td>
+                      <td><?php echo $line['quantity'] ?></td>
+                      <td><?php echo $line['unitprice']." ".$invoice['currency']; ?></td>
+                      <td><?php echo $line['price']." ".$invoice['currency']; ?></td>
                     </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
   </table>
   <p style="margin-top: 50px;margin-left: 15px;margin-bottom: 50px;"><?php echo $invoice['description'];?></p>
 </div>

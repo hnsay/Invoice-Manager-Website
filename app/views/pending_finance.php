@@ -10,34 +10,14 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
- 
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-    exit;
-}
-
-if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: 403.php");
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
+require_once MODEL_USER;
 
+protectPage(['superuser'], ['admin']);
 
-$sql = "SELECT * FROM invoices";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
-
-$sql2 = "SELECT username FROM users";
-$result2 = mysqli_query($link, $sql2);
-mysqli_close($link);
-    
+$users = getAllUsernames($link);
 ?>
  
 <!DOCTYPE html>

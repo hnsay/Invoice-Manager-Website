@@ -10,34 +10,13 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
- 
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-    exit;
-}
-
-if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: 403.php");
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
+require_once MODEL_USER;
 
-
-$sql = "SELECT * FROM invoices";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
-
-$sql2 = "SELECT username FROM users";
-$result2 = mysqli_query($link, $sql2);
-mysqli_close($link);
-    
+protectPage(['superuser'], ['admin']);
+$users = getAllUsernames($link);
 ?>
  
 <!DOCTYPE html>
@@ -45,23 +24,16 @@ mysqli_close($link);
 <head>
     <meta charset="UTF-8">
     <title>Bekleyen Faturalar</title>
-
-
     <script src="/public/Datatables/datatables.min.js"></script>
     <script src="/public/Datatables/moment.min.js"></script>
     <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>
     <script src="/public/Datatables/jquery.dataTables.colResize.js"></script>
-      <script src="/public/Datatables/select2.min.js"></script>
-    <?php //<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> ?>
+    <script src="/public/Datatables/select2.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
-    <?php //<link rel="stylesheet" href="/public/css/dataTables.checkboxes.css"> ?>
     <link rel="stylesheet" href="/public/css/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" href="/public/css/styles.css">
-    <?php //<link rel="stylesheet" href="/public/css/jquery.dataTables.colResize.css"> ?>
-      <link rel="stylesheet" type="text/css" href="/public/css/select2.min.css">
- 
-  
+    <link rel="stylesheet" type="text/css" href="/public/css/select2.min.css">
 
 <style type="text/css">
 
@@ -77,29 +49,20 @@ table {
   border-collapse: collapse;
 
 }
-
 .navbar {
       margin-bottom: 0;
       border-radius: 0;
 }
-
-
-
-
-
 th {
   background: #9F2725;
   border: 1px solid #ccc;
 }
-
 td {
   border: 1px solid #ccc;
 }
-
 table.dataTable tbody td {
   vertical-align: middle;
 }
-
 table.dataTable thead th {
   text-align: center;
   vertical-align: middle;
@@ -107,24 +70,15 @@ table.dataTable thead th {
 .dataTable:focus {
   outline: 0 !important;
 }
-
-
-
-
 .toolbar {
   float: left;
 }
-
-
-
 .dataTables_info {
     text-style: italic;
 }
-
 .inline {
   display: inline;
 }
-
 .link-button {
   background: none;
   border: none;
@@ -137,15 +91,10 @@ table.dataTable thead th {
 .link-button:active {
   color:red;
 }
-
 </style>
-
 </head>
-
 <?php require 'navbar.php'; ?>
-
 <body>
-
 <div style="padding-left: 30px;padding-right: 20px;margin-top: 50px;display: inline-block;">
 <table style="width:100%" class="table responsive" id="sorTable" tabindex="0">
     <thead>

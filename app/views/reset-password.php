@@ -10,20 +10,9 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
- 
-// Check if the user is logged in, if not then redirect to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
- 
-// Include config file
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
 
  
 // Define variables and initialize with empty values
@@ -32,7 +21,6 @@ $new_password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
- 
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
         $new_password_err = "Please enter the new password.";     

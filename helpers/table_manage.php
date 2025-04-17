@@ -10,25 +10,11 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
- 
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-    exit;
-}
-
-if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" ) {
-      header("location: 403.php");
-      exit;
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
 
+protectPage(['superuser'], ['admin']);
 ?>
 
 <script>
@@ -113,7 +99,7 @@ $(document).ready( function () {
         { data: 'po_rfa' },
         { data: 'description' },
         { render: function ( data, type, row, meta ) {
-            return '<form method="post" class="inline" action="/helpers/submit.php" target="_blank">'+
+            return '<form method="post" class="inline" action="submit.php" target="_blank">'+
             '<input type="hidden"/>'+
             '<button type="submit" name="'+
             row.no+
@@ -729,7 +715,7 @@ function sendOneRow(event, form) {
 
 <?php /*  $.ajax({
       type: "POST",
-      url: "/helpers/submit.php",
+      url: "submit.php",
       data: $(form).serialize()
   });*/?>
 

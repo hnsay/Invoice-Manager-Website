@@ -10,24 +10,13 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-// Initialize the session
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
- 
-// Check if the user is logged in, if not then redirect him to login page
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-      header("Location:login.php?location=" . urlencode($_SERVER['REQUEST_URI']));
-      exit;
-}
-
-if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
-      header("location: 403.php");
-      exit;
-}
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once SESSION_HELPER;
+require_once MODEL_INVOICE;
+
+protectPage(['superuser']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,41 +84,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_POST['process'])) {
         foreach ($_POST['array'] as $no) {
-            Process_invoice($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
+            processInvoiceAdmin($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
         }
             echo "Faturalar İşlendi";
     } else if (isset($_POST['reject'])) {
         foreach ($_POST['array'] as $no) {
-            Return_invoice($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
+            returnInvoiceAdmin($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
         }
         echo "Faturalar Geri Gönderildi";
     } else {
         echo "Yapılacak işlem belirlenemedi.";
     }
     //header("location: login.php");
+    exit;
 } else {
       header("location: 403.php");
-}
-
-
-function Process_invoice($link, $no, $comment, $comment2)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='İşlenmiş', comment=CONCAT(?, comment, ?) WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "sss", $comment, $comment2, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-
-function Return_invoice($link, $no, $comment, $comment2)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='Bekliyor', comment=CONCAT(?, comment, ?) WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "sss", $comment, $comment2, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+      exit;
 }
 ?>
 </textarea>
