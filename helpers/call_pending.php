@@ -15,7 +15,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 
-protectPage(['admin'], ['superuser']);
+protectPage(['superuser'], ['admin']);
 
 
 $sql = "SELECT * FROM invoices WHERE state='Bekliyor'";
@@ -26,8 +26,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     if ($row['assignee'] == null) {
         $row['assignee'] = "Atanmamış";
     }
-    
-    //$row['no'] = '<a href="invoice.php?' . $row['no'] . '=">' . $row['no'] . '</a>';
 
     $row['description'] = strip_tags($row['description']);
 

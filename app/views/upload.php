@@ -13,8 +13,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
-
-protectPage(['admin'], ['superuser']);
+require_once MODEL_INVOICE;
+protectPage(['superuser'], ['admin']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
@@ -23,50 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (is_array($inputData)) {
         foreach ($inputData as $row) {
-            Upload_invoice($link, $row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
-            Clear_invoicelines($link, $row[1]);
+            uploadInvoice($link, $row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
+            clearInvoiceLines($link, $row[1]);
             foreach ($row[6] as $line) {
-                Upload_invoiceline($link, $line[0], $line[1], $line[2], $line[3], $line[4]);
+                uploadInvoiceLine($link, $line[0], $line[1], $line[2], $line[3], $line[4]);
             }
         }
     }
-}
-
-function Upload_invoice($link, $supplier, $no, $date, $amount, $currency, $description)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "INSERT IGNORE INTO invoices(supplier,no,state,date,amount,currency,description) VALUES (?,?,'Bekliyor',?,?,?,?)");
-    mysqli_stmt_bind_param($stmt, "ssssss", $supplier, $no, $date, $amount, $currency, $description);
-    //mysqli_stmt_execute($stmt);
-    if (!mysqli_stmt_execute($stmt)) {
-        error_log("Insert failed: " . mysqli_stmt_error($stmt));
-    }
-    mysqli_stmt_close($stmt);
-}
-
-function Clear_invoicelines($link, $no)
-{
-    $stmt = mysqli_prepare($link, "DELETE FROM invoicelines WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "s", $no);
-    //mysqli_stmt_execute($stmt);
-    if (!mysqli_stmt_execute($stmt)) {
-        error_log("Insert failed: " . mysqli_stmt_error($stmt));
-    }
-    mysqli_stmt_close($stmt);
-}
-
-function Upload_invoiceline($link, $no, $product, $quantity, $unitprice, $price)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "INSERT IGNORE INTO invoicelines(no,product,quantity,unitprice,price) VALUES (?,?,?,?,?)");
-    mysqli_stmt_bind_param($stmt, "sssss", $no, $product, $quantity, $unitprice, $price);
-    //mysqli_stmt_execute($stmt);
-    if (!mysqli_stmt_execute($stmt)) {
-        error_log("Insert failed: " . mysqli_stmt_error($stmt));
-    }
-    mysqli_stmt_close($stmt);
 }
 ?>
 <!DOCTYPE html>

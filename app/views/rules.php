@@ -13,7 +13,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
-
+require_once MODEL_USER;
+require_once MODEL_INVOICE;
 protectPage(['superuser']);
 
 $sql = "SELECT * FROM rules";
@@ -30,16 +31,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch ($identifier) {
         case 'from-create':
             if (!empty(trim($_POST['supplier'])) && !empty(trim($_POST['username']))) {
-                if (Check_array($rules, $_POST['supplier'])) {
-                    Update_rule($link, $_POST['supplier'], $_POST['username']);
+                if (findInArray($rules, 'supplier', $_POST['supplier'])) {
+                    updateRule($link, $_POST['supplier'], $_POST['username']);
                 } else {
-                    Create_rule($link, $_POST['supplier'], $_POST['username']);
+                    createRule($link, $_POST['supplier'], $_POST['username']);
                 }
             }
             break;
         case 'form-delete':
             if (!empty(trim($_POST['username']))) {
-                Delete_rule($link, $_POST['supplier']);
+                deleteRule($link, $_POST['supplier']);
             }
             break;
 
@@ -49,83 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$sql = "SELECT * FROM rules";
-$result = mysqli_query($link, $sql);
-
-$rules = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    $rules[] = $row;
-}
-
-
-$sql = "SELECT username FROM users ORDER BY username ASC";
-$result1 = mysqli_query($link, $sql);
-
-$users = [];
-while ($row = mysqli_fetch_assoc($result1)) {
-    $users[] = $row;
-}
-
-$sql = "SELECT DISTINCT supplier FROM invoices ORDER BY supplier ASC";
-$result2 = mysqli_query($link, $sql);
-
-$suppliers = [];
-while ($row = mysqli_fetch_assoc($result2)) {
-    $suppliers[] = $row;
-}
-
-function Delete_rule($link, $supplier)
-{
-    $sql = "DELETE from rules where supplier=?";
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $first);
-    $first = $supplier;
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        return true;
-    }
-    else return false;
-}
-
-function Create_rule($link, $supplier, $username)
-{
-    $sql = "INSERT INTO rules (supplier, username) VALUES (?, ?)";
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, "ss", $first, $second);
-    $first = $supplier;
-    $second = $username;
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        return true;
-    }
-    else return false;
-}
-
-function Update_rule($link, $supplier, $username)
-{
-    $sql = "UPDATE rules SET username = ? WHERE supplier = ?";
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, "ss", $first, $second);
-    $first = $username;
-    $second = $supplier;
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        return true;
-    }
-    else return false;
-}
-
-function Check_array($rules, $supplier)
-{
-    foreach ($rules as $row) {
-        if ($row['supplier'] === $supplier) {
-            return true;
-        }
-    }
-    return false;
-}
-
-mysqli_close($link);
+$rules = getRules($link);
+$users = getAllUsernames($link);
+$suppliers = getSuppliers($link);
 ?>
 
 <!DOCTYPE html>
@@ -134,16 +61,10 @@ mysqli_close($link);
 <head>
     <meta charset="UTF-8">
     <title>Manage Rules</title>
-    
-    
     <script src="/public/Datatables/datatables.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
     <link rel="stylesheet" href="/public/css/styles.css">
-
-
-
-
   <style type="text/css">
 select{ text-align: left;}
 

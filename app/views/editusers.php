@@ -13,6 +13,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
+require_once MODEL_USER;
 
 protectPage(['superuser']);
  
@@ -20,23 +21,8 @@ protectPage(['superuser']);
 $email = "";
 $email_err = "";
 
-$sql = "SELECT username, email FROM users WHERE NOT usertype='mailgroup'";
-$result1 = mysqli_query($link, $sql);
-
-$users = [];
-while ($row = mysqli_fetch_assoc($result1)) {
-    $users[] = $row;
-}
-
-$sql = "SELECT username, email FROM users WHERE usertype='mailgroup'";
-$result2 = mysqli_query($link, $sql);
-
-$groups = [];
-while ($row = mysqli_fetch_assoc($result2)) {
-    $groups[] = $row;
-}
-
-
+$users = getActiveUsers($link);
+$groups = getMailGroups($link);
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -109,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2 style="margin-bottom:20px;">Edit User</h2>
             <div class="form-group">
                 <label>Select User to Change</label>
-                <select class="form-control" name="username" onchange="getEmail(this);">
+                <select class="form-control" name="username" onchange="getEmail(this); getUserType(this); getMailGroup(this);">
                 <?php foreach ($users as $row) {
                     ?><option ><?php echo $row['username'] ?></option>
                 <?php }?>
@@ -124,20 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
             <label style="margin-top:10px;">User Type</label>
-            <select class="form-control" name="usertype">
+            <select class="form-control" name="usertype" id="usertype">
             <option>user</option>
             <option>admin</option>
-            <?php // if ($_SESSION["username"] == "halil" || $_SESSION["username"] == "hasan") {
-                //echo "<option>superuser</option>";
-            //}
-            ?>
             <option>superuser</option>
             </select>
             </div>
 
             <div class="form-group">
             <label>Mailgroup</label>
-            <select class="form-control" name="mailgroup">
+            <select class="form-control" name="mailgroup" id="mailgroup">
             <option>null</option>
             <?php foreach ($groups as $row) {
                 ?><option><?php echo $row['username'] ?></option>
@@ -161,6 +143,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        function getEmail(selection){
         var email = users.filter(obj => {return obj.username === selection.value})[0].email;
         document.getElementById("email").value = email;
+       }
+
+        function getUserType(selection) {
+            var selectedUser = users.find(user => user.username === selection.value);
+            if (selectedUser) {
+            document.getElementById("usertype").value = selectedUser.usertype;
+            }
+        }
+
+       function getMailGroup(selection){
+        const selectedUser = users.find(user => user.username === selection.value);
+            if (selectedUser) {
+            document.getElementById("mailgroup").value = selectedUser.mailgroup;
+            }
        }
     </script>
 </body>

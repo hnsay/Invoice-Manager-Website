@@ -13,32 +13,20 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
-
+require_once MODEL_USER;
 protectPage(['superuser']);
 
-$sql = "SELECT username FROM users";
-$result = mysqli_query($link, $sql);
+$users = getAllUsernames($link);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if ($_POST['post'] == "admin") {
-    } else if (Delete_user($link, $_POST['post']) ) {
+    if ($_POST['post'] == "owner") {
+        // This is the owner user, you cannot delete this user.
+    } else if (deleteUser($link, $_POST['post']) ) {
         header("Location: manageusers.php?status=deleted&user=" . urlencode($_POST['post']));
         exit;
+    } else {
+        // error message here
     }
-    else echo "Something went wrong please try again later.";
-}
-
-function Delete_user($link, $username)
-{
-    $sql = "DELETE from users where username=?";
-    $stmt = mysqli_prepare($link, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $first);
-    $first= $username;
-    if (mysqli_stmt_execute($stmt)) {
-        mysqli_stmt_close($stmt);
-        return true;
-    }
-    else return false;
 }
 
 
@@ -64,8 +52,10 @@ function Delete_user($link, $username)
 <form class="form-group" id="myform" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"><br>
     <p>Please select user to delete</p>
       <select class="form-control" name="post">
-        <?php while ($row=mysqli_fetch_array($result)) {
-            ?> <option ><?php echo $row['username'] ?></option><?php
+        <?php foreach ($users as $user) {
+            if ($user['username'] != "owner") {
+                ?> <option ><?php echo $user['username'] ?></option><?php
+            }
         }?>
       </select><span class="help-block"></span><br>
       <button type="submit" class="btn btn-danger" onclick="return confirm('You are about to delete the selected user, are you sure?')">Delete</button>

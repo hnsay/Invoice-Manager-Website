@@ -13,8 +13,10 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
+require_once MODEL_INVOICE;
+require_once MODEL_USER;
 
-protectPage(['admin'], ['superuser']);
+protectPage(['superuser'], ['admin']);
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -43,11 +45,9 @@ if ($_POST['state'] == "Varsayılan" || $_POST['state'] == null) {
 
     foreach ($_POST['array'] as $no) {
         if ($user == "Default") {
-            Assign_Invoice_overload($link, $no, $comment);
-            //$message = "The action has been completed successfully";
+            assignInvoice($link, $no, $comment);
         } else {
-            Assign_invoice($link, $user, $no, $comment);
-            //$message = "The action has been completed successfully";
+            assignCommentInvoice($link, $user, $no, $comment);
         }
     }
 
@@ -55,11 +55,9 @@ if ($_POST['state'] == "Varsayılan" || $_POST['state'] == null) {
 
     foreach ($_POST['array'] as $no) {
         if ($user == "Default") {
-            Change_Invoice_Concur_overload($link, $no);
-            //$message = "The action has been completed successfully";
+            updateInvoiceConcur($link, $no);
         } else {
-            Change_Invoice_concur($link, $user, $no);
-            //$message = "The action has been completed successfully";
+            updateAssignInvoiceConcur($link, $user, $no);
         }
     }
 
@@ -67,107 +65,12 @@ if ($_POST['state'] == "Varsayılan" || $_POST['state'] == null) {
     $state = $_POST['state'];
     foreach ($_POST['array'] as $no) {
         if ($user == "Default") {
-            Change_Invoice_overload($link, $state, $no, $comment);
-            //$message = "The action has been completed successfully";
+            updateInvoice($link, $state, $no, $comment);
         } else {
-            Change_invoice($link, $user, $state, $no, $comment);
-            //$message = "The action has been completed successfully";
+            updateAssignInvoice($link, $user, $state, $no, $comment);
         }        
     }
 }
 
-
 echo "<script>window.close();</script>";
-
-// DEBUGGING
-//echo "user: ".$user."<br>";
-//echo "no: ".$no."<br>";
-//echo "state: ".$state."<br>";
-
-
-
-function Assign_invoice($link, $assignee, $no, $comment)
-{
-    if ($comment == "remove") {
-        //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        // config require once here was protected from replace operation 
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET assignee=?, comment = NULL WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "ss", $assignee, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    } else {
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET assignee=? WHERE no=?");    
-        mysqli_stmt_bind_param($stmt, "ss", $assignee, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-}
-
-function Change_invoice($link, $assignee, $state, $no, $comment)
-{
-    if ($comment == "remove") {
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET assignee=?, state=?, comment = NULL WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "sss", $assignee, $state, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    } else {
-        //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        // config require once here was protected from replace operation 
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET assignee=?, state=? WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "sss", $assignee, $state, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-}
-
-function Change_Invoice_concur($link, $assignee, $no)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET assignee=?, state='Concur', comment='Concur üzerinden işlenecek' WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "ss", $assignee, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-
-
-function Assign_Invoice_overload($link, $no, $comment)
-{
-    if ($comment == "remove") {
-        //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        // config require once here was protected from replace operation 
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET comment = NULL WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "s", $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-}
-
-function Change_Invoice_overload($link, $state, $no, $comment)
-{
-    if ($comment == "remove") {
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET state=?, comment = NULL WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "ss", $state, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    } else {
-        //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        // config require once here was protected from replace operation 
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET state=? WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "ss", $state, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-    }
-}
-
-function Change_Invoice_Concur_overload($link, $no)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='Concur', comment='Concur üzerinden işlenecek' WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "s", $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-
 ?>

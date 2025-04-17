@@ -14,31 +14,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 
-//check if the user is admin or superuser
-if (!isset($_SESSION["usertype"])) {
-    $sql = "SELECT usertype FROM users WHERE username = ?";
-    if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, "s", $param_username);
-        $param_username = $_SESSION["username"];
-        if (mysqli_stmt_execute($stmt)) {
-            mysqli_stmt_bind_result($stmt, $usertype);
-            if (mysqli_stmt_fetch($stmt)) {
-                $_SESSION["usertype"] = $usertype;
-            }
-            else $_SESSION["usertype"] = "user";
-        }
-    }
-}
-
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
 }
-
-
-$sql = "SELECT * FROM invoices where state='Pending' AND assignee = " . "'" . $_SESSION["username"] . "'";
-$result = mysqli_query($link, $sql);
-
-mysqli_close($link);
 ?>
 
 <!DOCTYPE html>

@@ -13,18 +13,11 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
+require_once MODEL_USER;
 
-protectPage(['admin'], ['superuser']);
+protectPage(['superuser'], ['admin']);
 
-
-$sql = "SELECT * FROM invoices";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
-
-$sql2 = "SELECT username FROM users";
-$result2 = mysqli_query($link, $sql2);
-mysqli_close($link);
-    
+$users = getAllUsernames($link);
 ?>
  
 <!DOCTYPE html>

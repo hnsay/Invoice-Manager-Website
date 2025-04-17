@@ -43,6 +43,11 @@ define('URL_SUBMIT', '/app/views/submit.php');
 define('URL_UPLOAD', '/app/views/upload.php');
 define('URL_WELCOME', '/app/views/welcome.php');
 
+define('MODELS_PATH', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'models');
+
+define('MODEL_INVOICE', MODELS_PATH . DIRECTORY_SEPARATOR . 'model_invoice.php');
+define('MODEL_USER', MODELS_PATH . DIRECTORY_SEPARATOR . 'model_user.php');
+
 define('HELPERS_PATH', $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'helpers');
 
 define('ASSIGN_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'assign.php');
@@ -51,6 +56,7 @@ define('CALL_PENDING_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'call_pending
 define('CALL_PENDING_FINANCE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'call_pending_finance.php');
 define('LOGOUT_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'logout.php');
 define('SESSION_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'session.php');
+define('TABLE_APPROVE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_approve.php');
 define('TABLE_MANAGE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_manage.php');
 define('TABLE_PROCESS_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_process.php');
 define('TABLE_PROCESS_LITE_HELPER', HELPERS_PATH . DIRECTORY_SEPARATOR . 'table_process_lite.php');

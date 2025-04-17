@@ -28,15 +28,12 @@ protectPage(['superuser']);
     <script src="/public/Datatables/moment.min.js"></script>
     <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>
     <script src="/public/Datatables/jquery.dataTables.colResize.js"></script>
-      <script src="/public/Datatables/select2.min.js"></script>
-    <?php //<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> ?>
+    <script src="/public/Datatables/select2.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
-    <?php //<link rel="stylesheet" href="/public/css/dataTables.checkboxes.css"> ?>
     <link rel="stylesheet" href="/public/css/awesome-bootstrap-checkbox.css">
     <link rel="stylesheet" href="/public/css/styles.css">
-    <?php //<link rel="stylesheet" href="/public/css/jquery.dataTables.colResize.css"> ?>
-      <link rel="stylesheet" type="text/css" href="/public/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/select2.min.css">
 
 <style type="text/css">
 
@@ -92,7 +89,7 @@ table.dataTable thead th {
 <body>
 <h1>Toplu Fatura İşleme</h1> <br>
 <div class="wrapper" style="padding-left: 50px;">
-<form action="/helpers/process_bulk_submit.php" method="post" id="submitBulkForm" onsubmit="sendData()">
+<form action="process_bulk_submit.php" method="post" id="submitBulkForm" onsubmit="sendData()">
             <div class="form-group <?php echo (!empty($comment_err)) ? 'has-error' : ''; ?>">
                 <p>Finans Yorum:</p>
                 <textarea style="margin-bottom:20px;" type="text" name="commentFinance" class="form-control" rows="3" maxlength="250" id="textArea"></textarea>
@@ -134,6 +131,6 @@ table.dataTable thead th {
   </tbody>
 </table>
 </div>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/helpers/table_process_lite.php"; ?>
+<?php require TABLE_PROCESS_LITE_HELPER ?>
 </body>
 </html>

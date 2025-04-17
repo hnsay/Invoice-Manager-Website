@@ -13,19 +13,12 @@
 
 // Initialize the session
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php"; 
 require_once SESSION_HELPER;
+protectPage(['superuser'], ['admin']);
+require_once MODEL_USER;
 
-protectPage(['admin'], ['superuser']);
-
-
-$sql = "SELECT * FROM invoices";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_array($result);
-
-$sql2 = "SELECT username FROM users";
-$result2 = mysqli_query($link, $sql2);
-mysqli_close($link);
+$users = getAllUsernames($link);
 ?>
  
 <!DOCTYPE html>
@@ -172,6 +165,6 @@ table.dataTable thead th {
   </tbody>
 </table>
 </div>
-<?php require $_SERVER['DOCUMENT_ROOT'] . "/helpers/table_process.php"; ?>
+<?php require TABLE_PROCESS_HELPER; ?>
 </body>
 </html>

@@ -13,12 +13,11 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
+require_once MODEL_USER;
 
 protectPage(['superuser']);
 
-
-$sql = "SELECT * FROM users";
-$result = mysqli_query($link, $sql);
+$users = getAllUsers($link);
 ?>
 
 <!DOCTYPE html>
@@ -26,16 +25,10 @@ $result = mysqli_query($link, $sql);
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
-    
-    
     <script src="/public/Datatables/datatables.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
     <link rel="stylesheet" href="/public/css/styles.css">
-
-
-
-
   <style type="text/css">
 select{ text-align: left;}
 
@@ -130,16 +123,16 @@ table.dataTable thead th {
     </tr>
   </thead>
   <tbody>
-    <?php while($rows = mysqli_fetch_array($result)): ?>
+    <?php foreach ($users as $user): ?>
           <tr>
         <td data-table-header="#"></td>
-              <td data-table-header="Kullanıcı Adı"><?php echo $rows['username']; ?></td>
-              <td data-table-header="Oluşturulma Tarihi"><?php echo $rows['created_at']; ?></td>
-              <td data-table-header="Email"><?php echo $rows['email']; ?></td>
-        <td data-table-header="Tür"><?php echo $rows['usertype']; ?></td>
-        <td data-table-header="Grup"><?php echo $rows['mailgroup']; ?></td>
+              <td data-table-header="Kullanıcı Adı"><?php echo $user['username']; ?></td>
+              <td data-table-header="Oluşturulma Tarihi"><?php echo $user['created_at']; ?></td>
+              <td data-table-header="Email"><?php echo $user['email']; ?></td>
+        <td data-table-header="Tür"><?php echo $user['usertype']; ?></td>
+        <td data-table-header="Grup"><?php echo $user['mailgroup']; ?></td>
         </tr>
-    <?php endwhile; ?>
+    <?php endforeach; ?>
   </tbody>
 </table>
 </div>

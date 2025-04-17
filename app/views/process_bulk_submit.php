@@ -14,6 +14,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
+require_once MODEL_INVOICE;
 
 protectPage(['superuser']);
 ?>
@@ -83,12 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_POST['process'])) {
         foreach ($_POST['array'] as $no) {
-            Process_invoice($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
+            processInvoiceAdmin($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
         }
             echo "Faturalar İşlendi";
     } else if (isset($_POST['reject'])) {
         foreach ($_POST['array'] as $no) {
-            Return_invoice($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
+            returnInvoiceAdmin($link, $no, "Atananın Yorumu: ", "\nFinans Yorumu: ".$_POST["commentFinance"]);
         }
         echo "Faturalar Geri Gönderildi";
     } else {
@@ -99,27 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
       header("location: 403.php");
       exit;
-}
-
-
-function Process_invoice($link, $no, $comment, $comment2)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='İşlenmiş', comment=CONCAT(?, comment, ?) WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "sss", $comment, $comment2, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-
-function Return_invoice($link, $no, $comment, $comment2)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='Bekliyor', comment=CONCAT(?, comment, ?) WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "sss", $comment, $comment2, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
 }
 ?>
 </textarea>

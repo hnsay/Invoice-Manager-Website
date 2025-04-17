@@ -135,7 +135,7 @@ table.dataTable thead th {
       </td>
 
       <td data-table-header="" style="vertical-align: middle;">
-        <form method="post" class="inline" action="/helpers/submit.php">  
+        <form method="post" class="inline" action="submit.php">  
                     <input type="hidden"/>
                         <button type="submit" name="<?php echo $rows['no'];?>" class="btn btn-success">
                                 İşlem Yap

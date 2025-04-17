@@ -14,7 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 
-protectPage(['admin'], ['superuser']);
+protectPage(['superuser'], ['admin']);
 ?>
 
 <script>
@@ -127,7 +127,7 @@ $(document).ready( function () {
         { data: 'po_rfa' },
         { data: 'description' },
         { render: function ( data, type, row, meta ) {
-            return '<form method="post" class="inline" action="/helpers/submit.php" target="_blank">'+
+            return '<form method="post" class="inline" action="submit.php" target="_blank">'+
             '<input type="hidden"/>'+
             '<button type="submit" name="'+
             row.no+
@@ -378,12 +378,12 @@ $(document).ready( function () {
       option.text = "Atamayı Kaldır";
       selector.add(option);
 
-      <?php while($rows = mysqli_fetch_array($result2)): ?>
+      <?php foreach ($users as $user): ?>
         option = document.createElement("option");
-        option.value = "<?php echo $rows['username'] ?>";
-        option.text = "<?php echo $rows['username'] ?>";       
+        option.value = "<?php echo $user['username'] ?>";
+        option.text = "<?php echo $user['username'] ?>";       
         selector.add(option);
-      <?php endwhile; ?>
+      <?php endforeach; ?>
       
         $myform.append(selector);
           // create second selector        
@@ -747,7 +747,7 @@ function sendOneRow(event, form) {
 
 <?php /*  $.ajax({
       type: "POST",
-      url: "/helpers/submit.php",
+      url: "submit.php",
       data: $(form).serialize()
   });*/?>
 

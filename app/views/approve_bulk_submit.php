@@ -13,8 +13,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
-
-protectPage(['admin'], ['superuser']);
+protectPage(['superuser'], ['admin']);
+require_once MODEL_USER;
+require_once MODEL_INVOICE;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,17 +83,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['approve'])) {
         if (isset($_POST['checkBox']) && $_POST['checkBox'] == "on") {
             foreach ($_POST['array'] as $no) {
-                Approve_Reject_invoice($link, trim($no), "Concur", "Concur üzerinden işlenecek", $_POST["ponumber"]);
+              invoiceApproveRejectBulk($link, trim($no), "Concur", "Concur üzerinden işlenecek", $_POST["ponumber"]);
             }
         } else {
             foreach ($_POST['array'] as $no) {
-                Approve_Reject_invoice($link, trim($no), "Onaylanmış", $_POST["comment"], $_POST["ponumber"]);
+              invoiceApproveRejectBulk($link, trim($no), "Onaylanmış", $_POST["comment"], $_POST["ponumber"]);
             }
         }
 
     } else if (isset($_POST['reject'])) {
         foreach ($_POST['array'] as $no) {
-                Approve_Reject_invoice($link, trim($no), "Reddedilmiş", $_POST["comment"], $_POST["ponumber"]);
+          invoiceApproveRejectBulk($link, trim($no), "Reddedilmiş", $_POST["comment"], $_POST["ponumber"]);
         }
     } else {
         echo "Yapılacak işlem belirlenemedi.";
@@ -102,47 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
       header("location: 403.php");
       exit;
-}
-
-
-function Check_details($link, $no)
-{    
-      $sql = "SELECT assignee, state FROM invoices where no = " . "'" . $no . "'";
-    $result = mysqli_query($link, $sql);
-    $invoice =  mysqli_fetch_array($result);
-    
-      $sql = "SELECT mailgroup FROM users WHERE username=". "'" . $_SESSION["username"] . "'";
-    $result = mysqli_query($link, $sql);
-    $mailgroup = mysqli_fetch_array($result)['mailgroup'];
-    
-    if ($invoice['state'] == "Bekliyor") {
-        if ($_SESSION["usertype"] == "superuser" || $_SESSION["usertype"] == "admin" || $invoice['assignee'] == $_SESSION["username"] || $invoice['assignee'] == $mailgroup) {
-            return 1;
-        } else {
-            return 0;
-        }
-    } else {
-        return -1;
-    }
-    
-}
-
-function Approve_Reject_invoice($link, $no, $state, $comment, $po)
-{
-    $detail_check = Check_details($link, $no);
-    if ($detail_check == 1) {
-        $stmt = mysqli_prepare($link, "UPDATE invoices SET state=?, comment=?, po_rfa=? WHERE no=?");
-        mysqli_stmt_bind_param($stmt, "ssss", $state, $comment, $po, $no);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-        echo $no." için işlem başarıyla tamamlandı, durum: ".$state." PO: ".$po."\n";
-    } else if ($detail_check == 0) {
-        echo $no." için işlem başarısız, fatura size veya grubunuza atanmamış.\n";
-    } else if ($detail_check == -1) {
-        echo $no." için işlem başarısız, bu faturada daha önce işlem yapılmış.\n";
-    } else {
-        echo $no." için işlem başarısız, error 302 , bir hata oluştu.\n";
-    }
 }
 ?>
 </textarea>

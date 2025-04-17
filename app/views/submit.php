@@ -13,6 +13,8 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
+require_once MODEL_USER;
+require_once MODEL_INVOICE;
 
 //set invoice number to "null"
 $no = 'null';
@@ -33,13 +35,8 @@ if ($no == 'null') {
       header("location: welcome.php");
 }
 
-$sql = "SELECT mailgroup FROM users WHERE username=". "'" . $_SESSION["username"] . "'";
-$result = mysqli_query($link, $sql);
-$mailgroup = mysqli_fetch_array($result)['mailgroup'];
-
-$sql = "SELECT * FROM invoices where no = " . "'" . $no . "'";
-$result = mysqli_query($link, $sql);
-$invoice =  mysqli_fetch_array($result);
+$mailgroup = getMailGroup($link, $_SESSION["username"]);
+$invoice =  getInvoice($link, $no);
 
 
 if ($_SESSION["usertype"] != "superuser" && $_SESSION["usertype"] != "admin" && $invoice['assignee'] != $_SESSION["username"] && $invoice['assignee'] != $mailgroup) {
@@ -77,21 +74,21 @@ if ($invoice['state'] == 'İşlenmiş') {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['process'])) {
         // process invoice    
-        Process_invoice($link, $_POST["no"], "Atananın Yorumu: ".$invoice['comment']."\nFinans Yorumu: ".$_POST["commentFinance"]);
+        processInvoice($link, $_POST["no"], "Atananın Yorumu: ".$invoice['comment']."\nFinans Yorumu: ".$_POST["commentFinance"]);
         $scenario = "success";
     } else if (isset($_POST['return'])) {
-        Return_invoice($link, $_POST["no"], "Atananın Yorumu: ".$invoice['comment']."\nFinans Yorumu: ".$_POST["commentFinance"]);
+        returnInvoice($link, $_POST["no"], "Atananın Yorumu: ".$invoice['comment']."\nFinans Yorumu: ".$_POST["commentFinance"]);
         $scenario = "success";
     } else if (isset($_POST['approve'])) {
         
         if (isset($_POST['checkBox']) && $_POST['checkBox'] == "on") {
-            Approve_Reject_invoice($link, $_POST["no"], "Concur", "Concur üzerinden işlenecek", $_POST["ponumber"]);
+            invoiceApproveReject($link, $_POST["no"], "Concur", "Concur üzerinden işlenecek", $_POST["ponumber"]);
             $scenario = "success";
         } else if (empty(trim($_POST["ponumber"])) && empty(trim($_POST["comment"])) ) {
                 $comment_err = "Lütfen bir açıklama veya PO/CO/RFA/SO numarası giriniz.";
         } else {
                 // approve invoice
-                Approve_Reject_invoice($link, $_POST["no"], "Onaylanmış", $_POST["comment"], $_POST["ponumber"]);
+                invoiceApproveReject($link, $_POST["no"], "Onaylanmış", $_POST["comment"], $_POST["ponumber"]);
                 $scenario = "success";
         }
 
@@ -101,48 +98,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $comment_err = "Lütfen bir açıklama veya PO/CO/RFA/SO numarası giriniz.";
         } else {
                 // reject invoice
-                Approve_Reject_invoice($link, $_POST["no"], "Reddedilmiş", $_POST["comment"], $_POST["ponumber"]);
+                invoiceApproveReject($link, $_POST["no"], "Reddedilmiş", $_POST["comment"], $_POST["ponumber"]);
                 $scenario = "success";
         }
     }
 
 }
- 
-
-function Approve_Reject_invoice($link, $no, $state, $comment, $po)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state=?, comment=?, po_rfa=? WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "ssss", $state, $comment, $po, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    //echo $no."      ".$state."    ".$comment;
-}
-
-function Process_invoice($link, $no, $comment)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='İşlenmiş', comment=? WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "ss", $comment, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-
-function Return_invoice($link, $no, $comment)
-{
-    //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    // config require once here was protected from replace operation 
-    $stmt = mysqli_prepare($link, "UPDATE invoices SET state='Bekliyor', comment=? WHERE no=?");
-    mysqli_stmt_bind_param($stmt, "ss", $comment, $no);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-}
-    
-    // Close connection
-    //mysqli_close($link);
-
 ?>  
 
 

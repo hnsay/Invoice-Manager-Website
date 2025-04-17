@@ -21,7 +21,6 @@ $new_password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
- 
     // Validate new password
     if (empty(trim($_POST["new_password"]))) {
         $new_password_err = "Please enter the new password.";     

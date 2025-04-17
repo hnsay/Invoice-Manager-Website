@@ -14,7 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 
-protectPage(['admin'], ['superuser']);
+protectPage(['superuser'], ['admin']);
 ?>
 
 <script>
@@ -99,7 +99,7 @@ $(document).ready( function () {
         { data: 'po_rfa' },
         { data: 'description' },
         { render: function ( data, type, row, meta ) {
-            return '<form method="post" class="inline" action="/helpers/submit.php" target="_blank">'+
+            return '<form method="post" class="inline" action="submit.php" target="_blank">'+
             '<input type="hidden"/>'+
             '<button type="submit" name="'+
             row.no+
@@ -715,7 +715,7 @@ function sendOneRow(event, form) {
 
 <?php /*  $.ajax({
       type: "POST",
-      url: "/helpers/submit.php",
+      url: "submit.php",
       data: $(form).serialize()
   });*/?>
 

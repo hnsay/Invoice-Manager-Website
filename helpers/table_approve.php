@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 /**
- * Create a DataTable for process_bulk.php.
+ * Create a DataTable for the page approve_bulk.php.
  *
  * PHP version 8.2.12
  *
@@ -10,121 +10,19 @@
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 
-protectPage(['superuser'], ['admin']);
 ?>
-
 <script>
-    const openRows = [];
-
-<?php //Date Picker Init data[5]?>
-
-let minDate, maxDate;
-
-DataTable.ext.search.push(function (settings, data, dataIndex) {
-    let min = minDate.val();
-    let max = maxDate.val();
-    let date = new Date(data[5]);
- 
-    if (
-        (min === null && max === null) ||
-        (min === null && date <= max) ||
-        (min <= date && max === null) ||
-        (min <= date && date <= max)
-    ) {
-        return true;
-    }
-    return false;
-});
-
-minDate = new DateTime('#min', {
-    format: 'DD/MM/YYYY',
-    i18n: {
-            previous: 'Geri',
-            next: 'İleri',
-            months: [
-                'Ocak',
-                'Şubat',
-                'Mart',
-                'Nisan',
-                'Mayıs',
-                'Haziran',
-                'Temmuz',
-                'Ağustos',
-                'Eylül',
-                'Ekim',
-                'Kasım',
-                'Aralık'
-            ],
-            weekdays: [ 'Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt' ]
-    }
-});
-maxDate = new DateTime('#max', {
-    format: 'DD/MM/YYYY'
-});
-
-
+const openRows = [];
 <?php //---------------------------------------------------------------?>
 <?php //---------------------------------------------------------------?>
 <?php //------------DATATABLES STARTING HERE---------------------------?>
 <?php //---------------------------------------------------------------?>
 <?php //---------------------------------------------------------------?>
 
-
 $(document).ready( function () {
   var table = $('#sorTable').DataTable({
-
-<?php /*
-    ajax:  {
-        url: "/helpers/call.php",
-        data: function(d){
-            d.supplier = "supplier";
-            d.no = "supplier";
-            d.assignee = "supplier";
-            d.state = "supplier";
-            d.date = "supplier";
-            d.amount = "supplier";
-            d.currency = "supplier";
-            d.po_rfa = "supplier";
-            d.description = "supplier";
-        }
-    },*/
-?>   
-    ajax:  { url: "<?php
-
-    
-    if (basename($_SERVER['PHP_SELF']) == 'process_bulk.php') {
-        echo "/helpers/call_pending_finance.php";
-    } else if (basename($_SERVER['PHP_SELF']) == 'approve_bulk.php') {
-        echo "call_assigned_invoices.php";
-    } else {
-          header("location: 403.php");
-    }?>" },<?php
-              /*dataSrc: function ( json ) {
-                for ( var i=0, ien=json.data.length ; i<ien ; i++ ) {
-                  json.data[i][0] = '<a href="/message/'+json.data[i][0]+'>View message</a>';
-                }
-              return json.data;
-              }*/?>          
-    columns: [
-        {},
-        { data: 'supplier' },
-        { data: 'no',
-          render: function ( data, type, row, meta ) {
-            return '<a href="invoice.php?'+data+'=" target="_blank">'+data+'</a>';
-            }
-        },
-        { data: 'state' },
-        { data: 'date' },
-        { data: 'amount' },
-        { data: 'currency' },
-        { data: 'description' },
-        { data: 'assignee' }
-    ], 
-    rowId: "no", <?php // use no for row ids ?>
 <?php //---------------------------------------------------------------?>
 <?php //------------------------General Settings-----------------------?>
 <?php //---------------------------------------------------------------?>
@@ -363,18 +261,24 @@ columnDefs : [
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-   function childRow (d, rowIndex) {
+function format (d) {
+
+return '<table cellpadding="5" cellspacing="0" border="0"  style="width:100%">'+
+  '<tr>'+
+  '<td>Açıklama:</td>'+
+  '<td>' + d[7] + '</td>'+
+  '</tr>'+
+  '</table>';
+}
+
+function childRow (d, rowIndex) {
     return '<table cellpadding="5" cellspacing="0" border="0"  style="width:100%;">'+
       '<tr>'+
       '<td colspan="2" style="border:0px;" id="td'+ rowIndex +'">'+
-      '<form target="_blank" data-rowindex="'+ rowIndex +'" '+
-      'onsubmit="sendOneRow(event,this)" action="/helpers/assign.php" method="post" style="display: inline;">'+
-      '</form>'+
       '</td>'+'</tr>'+
       '<tr>'+
       '<td style="width:20%">Açıklama:</td>'+
-      '<td colspan="2"><b>' + d['description'] + '</b></td>'+
-<?php //'<td colspan="2"><b>' + d[10] + '</b></td>'+ ?>
+      '<td colspan="2"><b>' + d[7] + '</b></td>'+
       '</tr>'+  
       '</table>';
   }
@@ -411,11 +315,12 @@ function checkAction(checkBox) {
 }
 
 function validateForm() {
-    var textArea = document.getElementById('textArea').value.trim();
+    var firstTextarea = document.getElementById('first').value.trim();
+    var secondTextarea = document.getElementById('second').value.trim();
     var helpBlock = document.getElementById('helpBlock');
 
-    if ( textArea === '') {
-        helpBlock.textContent = "Lütfen bir açıklama giriniz.";
+    if (firstTextarea === '' && secondTextarea === '') {
+        helpBlock.textContent = "Lütfen bir açıklama veya PO/CO/RFA/SO numarası giriniz.";
         return false; // Prevent form submission
     }
     return true; // Allow form submission
@@ -502,11 +407,12 @@ function sleep(ms) {
 
 function approveButton () {
     
-      var textArea = document.getElementById('textArea').value.trim();
+      var firstTextarea = document.getElementById('first').value.trim();
+      var secondTextarea = document.getElementById('second').value.trim();
       var helpBlock = document.getElementById('helpBlock');
       
-      if (textArea === '') {
-          helpBlock.textContent = "Lütfen bir açıklama giriniz.";
+      if (firstTextarea === '' && secondTextarea === '') {
+          helpBlock.textContent = "Lütfen bir açıklama veya PO/CO/RFA/SO numarası giriniz.";
           return false; // Prevent form submission
       }
     
@@ -524,7 +430,7 @@ function approveButton () {
       return false;
     } else {
 
-      var warningText = "Seçtiğiniz " + cellTexts.length + " fatura işlenecek, devam edilsin mi?\n\n";
+      var warningText = "Seçtiğiniz " + cellTexts.length + " fatura onaylanacak, devam edilsin mi?\n\n";
 
       warningText = warningText + "\n";
 
@@ -537,11 +443,12 @@ function approveButton () {
 
 function rejectButton () {
     
-      var textArea = document.getElementById('textArea').value.trim();
+      var firstTextarea = document.getElementById('first').value.trim();
+      var secondTextarea = document.getElementById('second').value.trim();
       var helpBlock = document.getElementById('helpBlock');
       
-      if (textArea === '') {
-          helpBlock.textContent = "Lütfen bir açıklama giriniz.";
+      if (firstTextarea === '' && secondTextarea === '') {
+          helpBlock.textContent = "Lütfen bir açıklama veya PO/CO/RFA/SO numarası giriniz.";
           return false; // Prevent form submission
       }
     
@@ -559,7 +466,7 @@ function rejectButton () {
       return false;
     } else {
 
-      var warningText = "Seçtiğiniz " + cellTexts.length + " fatura geri gönderilecek, devam edilsin mi?\n\n";
+      var warningText = "Seçtiğiniz " + cellTexts.length + " fatura reddedilecek, devam edilsin mi?\n\n";
 
       warningText = warningText + "\n";
 
@@ -571,5 +478,4 @@ function rejectButton () {
 }
 
 $.fn.dataTable.ext.errMode = 'none';
-
 </script>
