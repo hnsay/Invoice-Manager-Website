@@ -147,10 +147,6 @@ table.dataTable thead th {
   </tbody>
 </table>
 </div>
-<div style="font-size:20px;padding-bottom:50px;margin-:50px;">
-    <a href="https://outlook.office.com/mail/options/mail/junkEmail" target="_blank">Email Spam/Junk Adres Yönetimi</a><br>
-    <?php //<img src="images/sender-unblock.png"> ?>
-</div>
 
 <script>
 const openRows = [];
