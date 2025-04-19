@@ -6,7 +6,7 @@
  *
  * @category InvoiceTracker
  * @package  InvoiceTracker
- * @author   Halil Say <say@hnsay.com.tr>
+ * @author   Halil Say <github@hnsay.com.tr>
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
@@ -16,7 +16,7 @@ server with default setting (user 'root' with no password) */
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'test');
-define('DB_NAME', 'invoice_tracker_test');
+define('DB_NAME', 'invoice_tracker');
 
 define('URL_403', '/app/views/403.php');
 define('URL_ALL_INVOICES', '/app/views/allinvoices.php');

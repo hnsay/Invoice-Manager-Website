@@ -6,7 +6,7 @@
  *
  * @category InvoiceTracker
  * @package  InvoiceTracker
- * @author   Halil Say <say@hnsay.com.tr>
+ * @author   Halil Say <github@hnsay.com.tr>
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */

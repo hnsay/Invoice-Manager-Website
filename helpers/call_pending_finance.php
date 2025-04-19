@@ -6,13 +6,13 @@
  *
  * @category InvoiceTracker
  * @package  InvoiceTracker
- * @author   Halil Say <say@hnsay.com.tr>
+ * @author   Halil Say <github@hnsay.com.tr>
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
 // Initialize the session
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once SESSION_HELPER;
 
 protectPage(['superuser'], ['admin']);

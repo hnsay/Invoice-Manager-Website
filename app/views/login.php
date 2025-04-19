@@ -6,7 +6,7 @@
  *
  * @category InvoiceTracker
  * @package  InvoiceTracker
- * @author   Halil Say <say@hnsay.com.tr>
+ * @author   Halil Say <github@hnsay.com.tr>
  * @license  http://opensource.org/licenses/MIT MIT License
  * @link     invoices.com.tr
  */
@@ -27,8 +27,8 @@ if (isset($_POST['location']) && $_POST['location'] != '') {
 }
  
 // Include config file
-require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 
 // Define variables and initialize with empty values
 $username = $password = "";
