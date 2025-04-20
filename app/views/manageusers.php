@@ -25,6 +25,8 @@ $users = getAllUsers($link);
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
     <script src="/public/Datatables/datatables.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">

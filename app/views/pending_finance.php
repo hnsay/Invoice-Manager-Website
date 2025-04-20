@@ -25,6 +25,8 @@ $users = getAllUsernames($link);
 <head>
     <meta charset="UTF-8">
     <title>Finans'ta Bekleyen Faturalar</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
 
 
     <script src="/public/Datatables/datatables.min.js"></script>

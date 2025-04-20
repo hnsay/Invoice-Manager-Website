@@ -22,6 +22,8 @@ require_once MODEL_INVOICE;
 <head>
     <meta charset="UTF-8">
     <title>Toplu Fatura İşleme</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <style type="text/css">
 

@@ -24,6 +24,8 @@ $users = getAllUsernames($link);
 <head>
     <meta charset="UTF-8">
     <title>Bekleyen Faturalar</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
     <script src="/public/Datatables/datatables.min.js"></script>
     <script src="/public/Datatables/moment.min.js"></script>
     <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>

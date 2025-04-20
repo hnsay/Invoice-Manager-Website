@@ -85,6 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Change Password</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
     <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }

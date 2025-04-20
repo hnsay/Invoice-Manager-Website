@@ -24,6 +24,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <head>
     <meta charset="UTF-8">
     <title>Profil Yönetimi</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
     <link rel="stylesheet" href="/public/css/styles.css">
     <style type="text/css">
         body{ font: 12px sans-serif; }

@@ -36,16 +36,15 @@ mysqli_close($link);
 <head>
     <meta charset="UTF-8">
     <title>Anasayfa</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
     <script src="/public/Datatables/datatables.min.js"></script>
     <script src="/public/Datatables/dataTables.checkboxes.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
     <link rel="stylesheet" href="/public/css/styles.css">
     <link rel="stylesheet" href="/public/css/awesome-bootstrap-checkbox.css">
-
-
-
-
 <style type="text/css">
 
 body{ font: 12px sans-serif; text-align: center; }

@@ -61,6 +61,8 @@ $suppliers = getSuppliers($link);
 <head>
     <meta charset="UTF-8">
     <title>Manage Rules</title>
+    <link rel="icon" type="image/x-icon" href="/public/icons/favicon.ico">
+
     <script src="/public/Datatables/datatables.min.js"></script>
     <link rel="stylesheet" href="/public/Datatables/datatables.css"/>
     <link rel="stylesheet" href="/public/css/jquery.dataTables.css">
