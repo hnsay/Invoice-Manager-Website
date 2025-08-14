@@ -2,3 +2,7 @@
 backup/
 logs/
 .htaccess
+*.log
+*.txt
+dist/
+.env
