@@ -14,7 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/config.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 require_once MODEL_INVOICE;
-protectPage(['superuser'], ['admin']);
+protectPage(['superuser' , 'admin']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');

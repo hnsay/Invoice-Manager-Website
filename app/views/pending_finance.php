@@ -15,7 +15,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/config/error_log.php";
 require_once SESSION_HELPER;
 require_once MODEL_USER;
 
-protectPage(['superuser'], ['admin']);
+protectPage(['superuser' , 'admin']);
 
 $users = getAllUsernames($link);
 ?>

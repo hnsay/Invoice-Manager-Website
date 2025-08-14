@@ -16,7 +16,7 @@ require_once SESSION_HELPER;
 require_once MODEL_INVOICE;
 require_once MODEL_USER;
 
-protectPage(['superuser'], ['admin']);
+protectPage(['superuser' , 'admin']);
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
